@@ -59,11 +59,11 @@ const Room = {
       // eslint-disable-next-line prettier/prettier
       await axios.get(`${'http://localhost:8081'}/rooms`)
         .then(res => {
-          console.log(payload);
+          console.log("myRoomList:", payload);
           for (let i = 0; i < res.data.length; i++) {
             roomList[i] = {
               roomName: res.data[i].roomname,
-              roomId: res.data[i].id,
+              roomId: res.data[i].roomId,
             };
           }
           commit('roomList', roomList);
@@ -88,7 +88,6 @@ const Room = {
       // eslint-disable-next-line prettier/prettier
       await axios.get(`${'http://localhost:8081'}/rooms?roomname=${payload}`)
         .then(res => {
-          console.log("gotoroom:",payload);
           commit('goRoomId', res.data[0].id);
           return res.data[0].id;
         })
@@ -97,10 +96,10 @@ const Room = {
         });
     },
     // room user 설정
-    async setUsers({ commit }) {
+    async setUsers({ commit },payload) {
       const userList = [];
       // eslint-disable-next-line prettier/prettier
-       await axios.get(`${'http://localhost:8081'}/roomId?id=1`)
+       await axios.get(`${'http://localhost:8081'}/room?chatroom=${payload}`)
          .then(res => {
           // commit('setRoomId', res.data[0].id);
           // console.log(res.data[0].roomname);
@@ -116,13 +115,11 @@ const Room = {
         });
     },
     async setName({ commit }, payload) {
-      payload = 1;
       await axios
-        .get(`${'http://localhost:8081'}/room?id=${payload}`)
+        .get(`${'http://localhost:8081'}/room?chatroom=${payload}`)
         .then(res => {
-          console.log("roomName:",res);
-          commit('setRoomName', res.data[0].roomname);
-          return res.data[0].roomname;
+            commit('setRoomName', res.data.roomId.roomname);
+          return res.data.roomname;
         })
         .catch(err => {
           console.log(err);

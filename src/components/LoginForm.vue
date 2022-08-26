@@ -40,8 +40,9 @@ export default {
   methods: {
     async submitForm() {
       await this.$store.dispatch('login', this.userId);
-      const userId= this.$store.state.LoginSignup.nowuserId;
+      const userId= this.$store.state.LoginSignup;
       this.$router.push(`/home/${userId}`);
+   
     },
     signUp() {
       this.$router.replace('./signup');

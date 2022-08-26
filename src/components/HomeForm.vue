@@ -37,7 +37,7 @@ export default {
   },
   async created() {
     // this.$store.commit('initData');
-    await this.$store.dispatch('myRoomList', this.$route.params.id);
+    await this.$store.dispatch('myRoomList', this.$route.params);
     this.roomList = this.$store.state.Room.myRooms;
 
   },

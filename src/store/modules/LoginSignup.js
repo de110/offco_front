@@ -19,8 +19,8 @@ const LoginSignup = {
     //   state.userName = payload;
     // },
     loginUserId(state, payload) {
-      // state.nowUserId = payload;
-      state.username = payload;
+      state.nowUserId = payload;
+      // state.username = payload;
 
     },
     loginUserName(state, payload) {
@@ -70,15 +70,16 @@ const LoginSignup = {
       await axios.get(`${'http://localhost:8081'}/login?userId=${payload}`)
       // await axios.get(`${'http://localhost:8081'}/login`)
         .then(res => {
-          commit('loginUserId', res.data);
-          // // commit('loginUserName', res.data[0].username);
-          // localStorage.setItem(
-          //   'user',
-          //   JSON.stringify({
-          //     userId: res.data[0].id,
-          //     username: res.data[0].username,
-          //   }),
-          // );
+          commit('loginUserId', res.data.id);
+          console.log("payload:", payload);
+          // commit('loginUserName', res.data[0].username);
+          localStorage.setItem(
+            'user',
+            JSON.stringify({
+              userId: res.data.id,
+              username: res.data.username,
+            }),
+          );
           return res.data;
         })
         .catch(err => {
