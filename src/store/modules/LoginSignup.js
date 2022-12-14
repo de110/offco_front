@@ -19,8 +19,8 @@ const LoginSignup = {
     //   state.userName = payload;
     // },
     loginUserId(state, payload) {
-      state.nowUserId = payload;
-      // state.username = payload;
+      // state.nowUserId = payload;
+      state.username = payload;
 
     },
     loginUserName(state, payload) {
@@ -33,19 +33,19 @@ const LoginSignup = {
   actions: {
     async checkId({ commit }, payload) {
       // eslint-disable-next-line prettier/prettier
-      await axios.get(`${'http://localhost:8081'}/signup?userId=${payload}`)
+      await axios.get(`${'http://localhost:8081'}/api/signup?userId=${payload}`)
         .then(res => {
           if (res.data == false) {
             const message = {
               message: '사용가능한 아이디입니다',
-        //       useId: true,
+              //       useId: true,
             };
             commit('checkIdMessage', message);
             return message;
           } else {
             const message = {
               message: '이미 사용중인 아이디입니다',
-        //       useId: false,
+              //       useId: false,
             };
             commit('checkIdMessage', message);
             return message;
@@ -67,19 +67,18 @@ const LoginSignup = {
     // },
     async login({ commit }, payload) {
       // eslint-disable-next-line prettier/prettier
-      await axios.get(`${'http://localhost:8081'}/login?userId=${payload}`)
-      // await axios.get(`${'http://localhost:8081'}/login`)
+      await axios.post(`${'http://localhost:8081'}/api/login`, payload)
+        // await axios.get(`${'http://localhost:8081'}/login`)
         .then(res => {
-          commit('loginUserId', res.data.id);
-          console.log("payload:", payload);
-          // commit('loginUserName', res.data[0].username);
-          localStorage.setItem(
-            'user',
-            JSON.stringify({
-              userId: res.data.id,
-              username: res.data.username,
-            }),
-          );
+          commit('loginUserId', res.data);
+          // // commit('loginUserName', res.data[0].username);
+          // localStorage.setItem(
+          //   'user',
+          //   JSON.stringify({
+          //     userId: res.data[0].id,
+          //     username: res.data[0].username,
+          //   }),
+          // );
           return res.data;
         })
         .catch(err => {

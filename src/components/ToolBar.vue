@@ -20,7 +20,6 @@ export default {
   async created() {
     await this.$store.dispatch('setName', this.$route.params.id);
     this.id = this.$route.params.id;
-    console.log("this room id: ", this.id);
     this.roomHeader = this.$store.state.Room.roomName;
   },
 };

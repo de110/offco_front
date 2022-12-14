@@ -1,35 +1,34 @@
 <template>
-  <div>
-    <form @submit.prevent="submitForm">
-      <!-- <h2>로그인 유지<input type="checkbox" v-model="setlogin" /></h2> -->
-      <div>
-        <input class="form" type="text" placeholder="아이디" v-model="userId" />
-      </div>
-      <div>
-        <input
-          class="form"
-          type="password"
-          placeholder="비밀번호"
-          v-model="userpassword"
-          @keyup.enter="submitForm()"
-        />
-      </div>
-      <button class="login-button" type="submit">
-        LOGIN
-      </button>
-    </form>
-    <!-- <h3><router-link to="/findid">아이디 찾기</router-link>&nbsp;&nbsp;&nbsp; | <router-link to="/findpw">&nbsp;&nbsp;&nbsp;비밀번호 찾기</router-link></h3> -->
+<div>
+    <form action="/api/login" method="post" @submit="submitForm">
+    <!-- <form action="/api/login" @submit.prevent="submitForm" method="post"> -->
+    <!-- <label for="username" class="sr-only">User name</label> -->
+    <!-- <input type="text" name="username" id="username" class="form-control" placeholder="User name" required autofocus > -->
+    <input class="form" type="text" name="username" id="username" placeholder="아이디" v-model="username"/>
+    <!-- <label for="inputPassword" class="sr-only">Password</label> -->
+    <!-- <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required> -->
+    <input class="form" type="password" name="password" placeholder="비밀번호" v-model="password" method="post" @keyup.enter="submitForm()"/>
+    <div class="checkbox mb-3">
+      <label>
+        <input type="checkbox" value="remember-me"> Remember me </label>
+    </div>
+    <!-- <button class="btn btn-lg btn-primary btn-block" type="submit" @click="submitForm">Sign in</button> -->
+    <button class="login-button" type="submit"> LOGIN </button>
     <button class="signup-button" @click="signUp">회원가입</button>
-  </div>
+
+  </form>
+</div>
 </template>
 
 <script>
+import axios from 'axios';
+// import VueCookies from 'vue-cookies'
 export default {
   data() {
     return {
       // setlogin: false,
-      userId: '',
-      userpassword: '',
+      username: '',
+      password: '',
     };
   },
   created() {
@@ -39,10 +38,22 @@ export default {
   },
   methods: {
     async submitForm() {
-      await this.$store.dispatch('login', this.userId);
-      const userId= this.$store.state.LoginSignup;
-      this.$router.push(`/home/${userId}`);
-   
+      await this.$store.dispatch('login', this.username);
+      // const userId= this.$store.state.LoginSignup.nowuserId;
+      
+      axios.post(`http://localhost:8081/api/login?username=`, {
+        username:this.username,
+        // token:VueCookies.set("cookie","test")
+        // password:this.password
+      }).then(res=>{
+        console.log("login:",res);
+        this.$router.push(`/home/a`);
+      });
+
+      
+      // await this.$store.dispatch('login', this.username);
+      // const userId=this.$store.state.LoginSignup.nowuserId;
+
     },
     signUp() {
       this.$router.replace('./signup');

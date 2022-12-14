@@ -17,7 +17,7 @@ export default {
     back() {
       // this.userId = JSON.parse(localStorage.getItem('user')).userId;
       console.log(JSON.parse(localStorage.getItem('user')));
-      this.$router.push('/home/' + "userId");
+      this.$router.push('/home/' + this.userId);
     },
   },
 };

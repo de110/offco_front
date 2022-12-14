@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul>
-      <li v-for="room in roomList" :key="room.roomName">
+      <li v-for="room in roomList" :key="room.roomId">
         <router-link
           :to="/roomhome/ + room.roomId"
           tag="span"
@@ -24,6 +24,9 @@
 <script>
 import RoomCreate from './RoomCreate.vue';
 import Modal from './common/Modal.vue';
+// import axios from 'axios';
+// import request from 'request';
+
 export default {
   components: {
     RoomCreate,
@@ -37,9 +40,12 @@ export default {
   },
   async created() {
     // this.$store.commit('initData');
-    await this.$store.dispatch('myRoomList', this.$route.params);
+    // axios.get(`http://localhost:8080/api/loging`).then(res=>{
+    //    console.log("loging:",res);
+    // })
+    await this.$store.dispatch('myRoomList', this.$route.params.id);
     this.roomList = this.$store.state.Room.myRooms;
-
+        // console.log("roomList: ", this.$store.state);
   },
   methods: {
     createRoom() {

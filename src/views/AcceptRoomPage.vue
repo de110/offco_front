@@ -18,13 +18,13 @@ export default {
   created() {
     this.token = this.$route.params.token;
     this.$store.dispatch('checkToken', this.token);
-    console.log(this.$store.state.LoginSignup.nowUserName);
   },
   methods: {
     async accept() {
-      await this.$store.dispatch('RoomMember', this.$store.getters.TokenId);
+      await this.$store.dispatch('RoomMember', this.$route.params);
       alert('invitation succeed');
-      console.log(this.$store.state.LoginSignup.nowUserId);
+      // console.log("test1:",this.$store.getters);
+            console.log("test1:",this.$route.params);
       this.$router.push(`/roomhome/${this.$store.getters.TokenId}`);
     },
   },

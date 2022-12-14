@@ -10,26 +10,31 @@
 
 <script>
 import { newRoom } from '@/api/index.js';
+// import VueCookies from 'vue-cookies';
 export default {
   data() {
     return {
       roomname: '',
-      userId:''
+      // userId:''
+      // user:''
     };
   },
   methods: {
     async create() {
       const roomInfo = {
         roomname: this.roomname,
-        userId: this.userId,
+        // user:this.user
+        // user: "a"
         // users: [
         //   {
-        //     userId: JSON.parse(localStorage.getItem('user')).userId,
-        //     userName: JSON.parse(localStorage.getItem('user')).userName,
-        //   },
+            // JSON.parse(localStorage.getItem('userId')),
+            // userName: JSON.parse(localStorage.getItem('user')).userName,
+          // },
         // ],
         // inviteUrl: {},
       };
+      // this.userId = 
+      // console.log("cookie)
       await newRoom(roomInfo);
       await this.$store.dispatch('goToRoom', this.roomname);
       this.$router.push(`/roomhome/${this.$store.state.Room.goRoomId}`);

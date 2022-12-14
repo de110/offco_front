@@ -12,7 +12,10 @@ export const store = new Vuex.Store({
     Room: Room,
     Calendar: Calendar,
   },
-  state: {},
+  state: {
+    // userId: getUserFromCookie() || '',
+    // token: getAuthFromCookie() || ''
+  },
   mutations: {},
   actions: {},
   getters: {},
