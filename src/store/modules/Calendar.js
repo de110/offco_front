@@ -2,7 +2,7 @@
 import axios from 'axios'
 
 const Calendar = {
-      state: {
+    state: {
         year: '',
         month: '',
         day: '',
@@ -26,7 +26,7 @@ const Calendar = {
         clearAll(state) {
             localStorage.clear();
             state.todos = [];
-            }
+        }
 
 
     },
@@ -36,7 +36,9 @@ const Calendar = {
             axios.post(`${'http://localhost:8000'}/todolist`, {
                 title: payload.title,
                 createdAt: payload.createdAt,
-                calendarId: payload.calendarId
+                room: {
+                    roomId: payload.calendarId
+                }
 
             }).then((res) => {
                 commit('addNewTodo', res.data);
@@ -44,23 +46,23 @@ const Calendar = {
         },
         getTodo({ commit }, payload) {
             //해당방ID를 payload로 받음
-             axios.get(`${'http://localhost:8000'}/todolist?calendarId=${payload}`)
-            .then((res) => {
-                let i;
-                for(i=0; i<res.data.length; i++) {
-                    commit('addNewTodo', res.data[i])
-                }
-            })
+            axios.get(`${'http://localhost:8000'}/todolist?calendarId=${payload}`)
+                .then((res) => {
+                    let i;
+                    for (i = 0; i < res.data.length; i++) {
+                        commit('addNewTodo', res.data[i])
+                    }
+                })
         }
 
 
-    }, 
+    },
     getters: {
         showTodo: state => {
-            return state.todos.filter(todo => todo.createdAt == state.year+"-"+state.month+"-"+state.day)
+            return state.todos.filter(todo => todo.createdAt == state.year + "-" + state.month + "-" + state.day)
         }
 
     }
-   
+
 }
 export default Calendar
